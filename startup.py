@@ -1,6 +1,8 @@
 import requests
 import datetime
 import json
+import sys
+import os
 
 url = 'http://www.way2sms.com/api/v1/sendCampaign'
 file_name = 'start_up_log.txt'
@@ -33,7 +35,14 @@ def file_read():
 		data = file_write()
 		return data
 
+def get_computer_details():
+	platform = sys.platform
+	username = os.system('whoami')
+	data = { 'platform': platform, 'username': username }
+	return data
+
 if __name__ == '__main__':
+	computer_data = get_computer_details()
 	api_data = file_read()
 	api_key = api_data['API-Key']
 	secret = api_data['API-Secret']
