@@ -1,1 +1,0 @@
-{"Phone Number": "9717271991", "Sender ID": "Sender ID", "API-Key": "API-Key", "API-Secret": "API-Secret"}

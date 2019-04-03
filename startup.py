@@ -6,47 +6,54 @@ url = 'http://www.way2sms.com/api/v1/sendCampaign'
 file_name = 'start_up_log.txt'
 
 def file_write():
-	file = open(file_name, 'w')
-	phone_number = str(raw_input('Enter phone number: '))
-	api_key = str(raw_input('Enter API-Key: '))
-	api_secret = str(raw_input('Enter API-Secret: '))
-	sender_id = str(raw_input('Enter Sender ID: '))
-	data = { 'Phone Number': phone_number, 'API-Key': api_key, 'API-Secret': api_secret, 'Sender ID': sender_id }
-	data = json.dumps(data)
-	file.write(data)
-	file.close()
-	return data
+	try:
+		with open(file_name, 'w') as file:
+			phone_number = str(raw_input('Enter phone number: '))
+			api_key = str(raw_input('Enter API-Key: '))
+			api_secret = str(raw_input('Enter API-Secret: '))
+			sender_id = str(raw_input('Enter Sender ID: '))
+			data = { 'Phone Number': phone_number, 'API-Key': api_key, 'API-Secret': api_secret, 		 'Sender ID': sender_id }
+			file_data = json.dumps(data)
+			file.write(file_data)
+			return data
+	except IOError:
+		print IOError
 
 def file_read():
-	file = open(file_name, 'r')
-	data = file.read()
-	if len(data) == 0:
-		file_write()
-	else:
-		data = json.loads(data)
-	file.close()
-	return data
+	try:
+		with open(file_name, 'r') as file:
+			data = file.read()
+			if len(data) == 0:
+				file_write()
+			else:
+				data = json.loads(data)
+			return data
+	except IOError:
+		print file_name + ' not found.'
+		data = file_write()
+		return data
 
-data = file_read()
+if __name__ == '__main__':
+	api_data = file_read()
+	api_key = api_data['API-Key']
+	secret = api_data['API-Secret']
+	use_type = 'prod'
+	phone_no = api_data['Phone Number']
+	sender_id = api_data['Sender ID']
+	message = 'Computer turned on at ' + str(datetime.datetime.now())
 
-api_key = data
-secret = 'AQM5HJ3OZR5AVDBX'
-use_type = 'prod'
-phone_no = '9717271991'
-sender_id = 'active-sender-id'
-message = 'Computer turned on at ' + str(datetime.datetime.now())
-
-
-req_params = {
-  'apikey':api_key,
-  'secret':secret,
-  'usetype':use_type,
-  'phone': phone_no,
-  'message':message,
-  'senderid':sender_id
-}
-
-# send_message = requests.post(url, req_params)
-# print send_message.json
+	req_params = {
+  		'apikey': api_key,
+  		'secret': secret,
+  		'usetype': use_type,
+  		'phone': phone_no,
+  		'message': message,
+  		'senderid': sender_id
+	}
 
 
+	#send_message = requests.post(url, req_params)
+	#print send_message
+	#print send_message.text
+	#print send_message.status_code
+	#print send_message.json
