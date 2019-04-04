@@ -13,13 +13,13 @@ def file_write():
 			phone_number = str(raw_input('Enter phone number: '))
 			api_key = str(raw_input('Enter API-Key: '))
 			api_secret = str(raw_input('Enter API-Secret: '))
-			sender_id = str(raw_input('Enter Sender ID: '))
-			data = { 'Phone Number': phone_number, 'API-Key': api_key, 'API-Secret': api_secret, 		 'Sender ID': sender_id }
+			data = { 'Phone Number': phone_number, 'API-Key': api_key, 'API-Secret': api_secret }
 			file_data = json.dumps(data)
 			file.write(file_data)
 			return data
-	except IOError:
+	except IOError, TypeError:
 		print IOError
+		print TypeError
 
 def file_read():
 	try:
@@ -37,8 +37,15 @@ def file_read():
 
 def get_computer_details():
 	platform = sys.platform
-	username = os.system('whoami')
-	data = { 'platform': platform, 'username': username }
+	if platform == 'linux2':
+		platform = 'linux'
+		username = os.getlogin()
+	if platform == 'win32' or platform == 'cygwin':
+		platform = 'windows'
+		username = os.getcwd().split('\\')[2]
+	version = sys.version
+	arch = 'x' + version.split('bit')[0][-3:]
+	data = { 'platform': platform, 'arch': arch, 'username': username }
 	return data
 
 if __name__ == '__main__':
@@ -46,9 +53,10 @@ if __name__ == '__main__':
 	api_data = file_read()
 	api_key = api_data['API-Key']
 	secret = api_data['API-Secret']
-	use_type = 'prod'
+	use_type = 'stage'
 	phone_no = api_data['Phone Number']
-	sender_id = api_data['Sender ID']
+	sender_id = computer_data['username'] + '@' + computer_data['platform'] + \
+				computer_data['arch']
 	message = 'Computer turned on at ' + str(datetime.datetime.now())
 
 	req_params = {
@@ -60,7 +68,7 @@ if __name__ == '__main__':
   		'senderid': sender_id
 	}
 
-
+	print req_params
 	#send_message = requests.post(url, req_params)
 	#print send_message
 	#print send_message.text
