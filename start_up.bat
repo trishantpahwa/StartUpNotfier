@@ -1,0 +1,1 @@
+python "C:\Program Files\StartUpNotifier\startup.py"
