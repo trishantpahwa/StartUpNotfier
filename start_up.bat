@@ -1,1 +1,1 @@
-python "C:\Program Files\StartUpNotifier\startup.py"
+python C:\Users\HP\StartUpNotifier\startup.py
