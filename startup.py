@@ -57,7 +57,7 @@ if __name__ == '__main__':
 	phone_no = api_data['Phone Number']
 	sender_id = computer_data['username'] + '@' + computer_data['platform'] + \
 				computer_data['arch']
-	message = 'Computer turned on at ' + str(datetime.datetime.now())
+	message = sender_id + 'turned on at ' + str(datetime.datetime.now())
 
 	req_params = {
   		'apikey': api_key,
@@ -68,9 +68,8 @@ if __name__ == '__main__':
   		'senderid': sender_id
 	}
 
-	print req_params
-	#send_message = requests.post(url, req_params)
-	#print send_message
-	#print send_message.text
-	#print send_message.status_code
-	#print send_message.json
+	send_message = requests.post(url, req_params)
+	print send_message
+	print send_message.text
+	print send_message.status_code
+	print send_message.json
