@@ -1,4 +1,4 @@
-# StartUpNotfier
+# StartUpNotifier
 A program to notify the computer owner/user whenever it is switched on by sending them a SMS.
 
 The program uses [way2sms](http://way2sms.com) API to send messages. You can sign up on the link and add some balance to your account. The API charges about 0.02 Rs, to send a message.
