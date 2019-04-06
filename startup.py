@@ -53,7 +53,7 @@ if __name__ == '__main__':
 	api_data = file_read()
 	api_key = api_data['API-Key']
 	secret = api_data['API-Secret']
-	use_type = 'stage'
+	use_type = 'prod'
 	phone_no = api_data['Phone Number']
 	sender_id = computer_data['username'] + '@' + computer_data['platform'] + \
 				computer_data['arch']
