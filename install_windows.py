@@ -44,8 +44,10 @@ def file_write(username):
 		print TypeError
 
 def install_StartUpNotifier():
-    install('HP')
-    file_write('HP')
-    get_startup_location('HP')
+    username = os.getcwd().split('\\')[2]
+    install(username)
+    file_write(username)
+    get_startup_location(username)
 
-install_StartUpNotifier()
+if __name__ == '__main__()':
+    install_StartUpNotifier()
