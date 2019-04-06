@@ -43,3 +43,8 @@ def file_write():
 		print IOError
 		print TypeError
 
+def install_StartUpNotifier():
+    install()
+    file_write()
+    get_startup_location()
+
