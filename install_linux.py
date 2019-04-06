@@ -48,3 +48,5 @@ def install_StartUpNotifier():
     file_write()
     get_startup_location()
 
+if __name__ == '__main__()':
+    install_StartUpNotifier()
