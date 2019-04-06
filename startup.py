@@ -69,7 +69,8 @@ if __name__ == '__main__':
 	}
 
 	send_message = requests.post(url, req_params)
-	print send_message
-	print send_message.text
-	print send_message.status_code
-	print send_message.json
+	status_code = send_message.status_code
+	send_message = json.loads(send_message.text)
+	code = send_message['code']
+	if status_code == 200 and code == '200':
+		print 'Message sent successfully.'
