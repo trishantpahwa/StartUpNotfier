@@ -42,7 +42,7 @@ def get_computer_details():
 		username = os.getlogin()
 	if platform == 'win32' or platform == 'cygwin':
 		platform = 'windows'
-		username = os.getcwd().split('\\')[2]
+		username = os.getenv('username')
 	version = sys.version
 	arch = 'x' + version.split('bit')[0][-3:]
 	data = { 'platform': platform, 'arch': arch, 'username': username }
