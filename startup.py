@@ -5,9 +5,8 @@ import sys
 import os
 
 url = 'http://www.way2sms.com/api/v1/sendCampaign'
-file_name = 'start_up_log.txt'
 
-def file_write():
+def file_write(file_name):
 	try:
 		with open(file_name, 'w') as file:
 			phone_number = str(raw_input('Enter phone number: '))
@@ -21,28 +20,23 @@ def file_write():
 		print IOError
 		print TypeError
 
-def file_read():
+def file_read(file_name):
 	try:
 		with open(file_name, 'r') as file:
 			data = file.read()
 			if len(data) == 0:
-				file_write()
+				file_write(file_name)
 			else:
 				data = json.loads(data)
 			return data
 	except IOError:
 		print file_name + ' not found.'
-		data = file_write()
+		data = file_write(file_name)
 		return data
 
 def get_computer_details():
 	platform = sys.platform
-	if platform == 'linux2':
-		platform = 'linux'
-		username = os.getlogin()
-	if platform == 'win32' or platform == 'cygwin':
-		platform = 'windows'
-		username = os.getenv('username')
+	username = os.getenv('username')
 	version = sys.version
 	arch = 'x' + version.split('bit')[0][-3:]
 	data = { 'platform': platform, 'arch': arch, 'username': username }
@@ -50,7 +44,8 @@ def get_computer_details():
 
 if __name__ == '__main__':
 	computer_data = get_computer_details()
-	api_data = file_read()
+	file_name = 'C:\\Users\\' + computer_data['username'] + '\\StartUpNotifier\\start_up_log.txt'
+	api_data = file_read(file_name)
 	api_key = api_data['API-Key']
 	secret = api_data['API-Secret']
 	use_type = 'prod'
