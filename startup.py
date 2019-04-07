@@ -68,4 +68,4 @@ if __name__ == '__main__':
 	send_message = json.loads(send_message.text)
 	code = send_message['code']
 	if status_code == 200 and code == '200':
-		print 'Message sent successfully.'
+		print 'Message sent to phone successfully.'
