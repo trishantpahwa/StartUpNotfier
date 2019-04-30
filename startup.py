@@ -36,19 +36,27 @@ def file_read(file_name):
 
 def get_computer_details():
 	platform = sys.platform
-	username = os.getenv('username')
-	version = sys.version
+	if platform == 'linux2':
+		username = os.getlogin()
+		version = os.uname()
+		version = version[4]
+	else:
+		username = os.getenv('username')
+		version = sys.version
 	arch = 'x' + version.split('bit')[0][-3:]
 	data = { 'platform': platform, 'arch': arch, 'username': username }
 	return data
 
 if __name__ == '__main__':
 	computer_data = get_computer_details()
-	file_name = 'C:\\Users\\' + computer_data['username'] + '\\StartUpNotifier\\start_up_log.txt'
+	if computer_data['platform'] == 'win32':
+		file_name = 'C:\\Users\\' + computer_data['username'] + '\\StartUpNotifier\\start_up_log.txt'
+	if computer_data['platform'] == 'linux' or computer_data['platform'] == 'linux2' or computer_data['platform'] == 'linux3':
+		file_name = '/usr/share/StartUpNotifier/start_up_log.txt'
 	api_data = file_read(file_name)
 	api_key = api_data['API-Key']
 	secret = api_data['API-Secret']
-	use_type = 'prod'
+	use_type = 'stage'  # Set it to prod for live
 	phone_no = api_data['Phone Number']
 	sender_id = computer_data['username'] + '@' + computer_data['platform'] + \
 				computer_data['arch']

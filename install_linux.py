@@ -4,7 +4,6 @@ import json
 
 def get_startup_location():
     start_up_sh = 'start_up.sh'
-    start_up_location = '\\etc\\init.d\\' + start_up_sh
     try:
         with open(start_up_location, 'w') as start_up_file:
             with open(start_up_sh, 'r') as start_up:
@@ -15,10 +14,10 @@ def get_startup_location():
 
 def install():
     start_up = 'startup.py'
-    start_up_script = '\\usr\\share\\'
+    start_up_script = '/usr/share/'
     if 'StartUpNotifier' not in os.listdir(start_up_script):
-        os.mkdir(start_up_script + '\\StartUpNotifier')
-    start_up_script += '\\StartUpNotifier\\' + start_up
+        os.mkdir(start_up_script + 'StartUpNotifier')
+    start_up_script += '/StartUpNotifier/' + start_up
     try:
         with open(start_up_script, 'w') as start_up_file:
             with open(start_up, 'r') as start_up:
@@ -28,7 +27,7 @@ def install():
         print 'File not found'
 
 def file_write():
-    file_location = '\\usr\\share\\StartUpNotifier\\'
+    file_location = '/usr/share/StartUpNotifier/'
     file_name = file_location + 'start_up_log.txt'
     try:
 		with open(file_name, 'w') as file:
@@ -48,5 +47,4 @@ def install_StartUpNotifier():
     file_write()
     get_startup_location()
 
-if __name__ == '__main__()':
-    install_StartUpNotifier()
+install_StartUpNotifier()
